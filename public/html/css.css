@@ -1,0 +1,74 @@
+/*reset-styles
+--------------------------------------------------*/
+*{ margin:0; padding:0;}
+html,body{ width:1280px;height:720px;color:#000;font-family: "微软雅黑";overflow: hidden;}
+li{ list-style:none;}
+a { text-decoration:none; background-color:transparent;}
+a:hover,a:focus,input:focus { background-color:transparent; outline:none;}
+img{ border:0 none;outline:none;width:100%;height:100%;display: block;}
+a:focus img{ border:0 none;}
+input,textarea,button,a { -webkit-tap-highlight-color:#000; border:none; outline:none;}
+h1,h2,h3 { font-weight:normal; font-size:100%;}
+i,em{font-style: normal;}
+/*common-styles
+--------------------------------------------------*/
+.root{position: absolute;top:0;left:0;width:1280px;height:720px;}
+/*
+列表组件
+--------------------------------------------------*/
+.list{ overflow: hidden;width: 500px;height: 500px;overflow: hidden;margin:0 auto 10px;position: relative;z-index: 3;float: left;}
+.list .per{float: left;display:block;width: 162px; height: 240px;position: relative;border:4px solid transparent;box-sizing: border-box;}
+.list .per img{ width: 100%; height: 100%;}
+.list .per .caption{position: absolute;bottom: 0; width: 100%;height: 36px;}
+.list .per p{position: absolute;white-space: nowrap;overflow: hidden;background-color:rgba(0, 0, 0, 0.5);text-overflow: ellipsis; top: 0;color:#fff;font-size:14px;text-align: center;width: 100%;height:36px;line-height: 36px;}
+.list .per.active{border:4px solid red}
+.list .pertext {float: none;line-height: 36px;height: 36px;width: 300px;width: 100%;}
+.list .pertext p {text-indent: 10px;background: none;color: #000;text-align: left;height:28px;line-height: 28px;}
+/*
+菜单组件
+--------------------------------------------------*/
+.node{position: absolute;}
+.menulist{width:160px;height: 338px;}
+.menulist.row{width: 338px;height: 160px;overflow: hidden;}
+.menulist.row .item{float: left;}
+.menulist .item{line-height: 40px;color:#333;font-size:16px;text-align: center;}
+/*
+菜单组件
+--------------------------------------------------*/
+.component .list[data-v-47ecea1a]{width:100%;overflow:hidden;}
+.component .list .item{position:relative;width:152px;height:220px;float:left;margin-left:10px;margin-top:10px;}
+.component .list .item img{width:100%;height:100%;position:absolute;top:0;left:0;background-color:blue}
+.component .list .item .title{position:absolute;bottom:0;left:0;width:100%;height:36px;line-height:36px;color:#fff;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background-color:#000;margin:0}
+/*
+文字图片列表组件
+--------------------------------------------------*/
+.imglist-item {
+    width: 150px;
+    height: 230px;
+    float: left;
+    position :relative;
+}
+
+.imglist-item-img {
+    width :150px;
+    height :230px;
+}
+
+.imglist-item-title {
+    height: 30px;
+    line-height: 30px;
+    background :#000000;
+    color: #ffffff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position :absolute;
+    bottom :0;
+    left :0;
+    right: 0;
+}
+.imglist-item-title2 {
+    overflow: hidden ;
+    text-overflow: ellipsis ;
+    white-space: nowrap ;
+}

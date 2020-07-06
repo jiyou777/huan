@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" id="html">
+
+<head>
+    <meta charset="gbk">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>页面</title>
+    <link href="http://localhost:8565/html/css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="root" class="root">
+    </div>
+    <script type="text/javascript" src="http://localhost:8565/html/js/common.js"></script>
+
+    <script>
+        var html = "";
+        //渲染组件
+        var componentsRender = {
+            getmenue: function (data, parentnode) {
+                var id = data.id.split("/")[1];
+                var str1 = "";
+                this.commonset(id, data, 'menulist', parentnode);
+                _loadjs('http://localhost:8565/html/js/menue.js', function () {
+                        // console.log(parm)
+                    })
+                // if (!isEmpty(data.props.interfacechoose)) {
+                //     // console.log(document.getElementsByTagName("script"))
+                   
+                //     // Ajax('get', base + data.props.interfacechoose + '.json', true, {}, function (success) {
+                //     //     var res = JSON.parse(success);
+                //     //     for (var i = 0; i < res.length; i++) {
+                //     //         str1 += '<div  class="item">' + res[i].label + '</div>';
+                //     //     }
+                //     //     $(id).innerHTML = str1
+                //     // }, function (faild) {
+                //     // })
+                // }
+                // else {
+                //     str1 = '<div  class="item">菜单1</div><div class="item">菜单2</div><div  class="item">菜单3</div><div  class="item">菜单4</div>'
+                //     $(id).innerHTML = str1
+                // }
+            },
+            getimg: function (data, parentnode) {
+                var id = data.id.split("/")[1]
+                this.commonset(id, data, 'imgbox', parentnode);
+                var str1 = ""
+                if (!isEmpty(data.props.interfacechoose)) {
+                    Ajax('get', base + data.props.interfacechoose + '.json', true, {}, function (success) {
+                        var res = JSON.parse(success);
+                        for (var i = 0; i < res.length; i++) {
+                            str1 += '<div  class="item">' + res[i].label + '</div>';
+                        }
+                        $(id).innerHTML = str1
+                    }, function (faild) {
+                    })
+                } else {
+                    str1 = '<img src="http://localhost:8565/images/defaultimg.png">'
+                    $(id).innerHTML = str1
+                }
+                $(id).innerHTML = str1
+            },
+            getnewlist: function (data, parentnode) {
+                var id = data.id.split("/")[1];
+                var str1 = "";
+                console.log("newlist")
+                this.commonset(id, data, 'newlist', parentnode);
+                _loadjs('http://localhost:8565/html/js/newList.js', function () {
+                        // console.log(parm)
+                    })
+                // if (!isEmpty(data.props.interfacechoose)) {
+                //     // console.log(document.getElementsByTagName("script"))
+                   
+                //     // Ajax('get', base + data.props.interfacechoose + '.json', true, {}, function (success) {
+                //     //     var res = JSON.parse(success);
+                //     //     for (var i = 0; i < res.length; i++) {
+                //     //         str1 += '<div  class="item">' + res[i].label + '</div>';
+                //     //     }
+                //     //     $(id).innerHTML = str1
+                //     // }, function (faild) {
+                //     // })
+                // }
+                // else {
+                //     str1 = '<div  class="item">菜单1</div><div class="item">菜单2</div><div  class="item">菜单3</div><div  class="item">菜单4</div>'
+                //     $(id).innerHTML = str1
+                // }
+            },
+            getnode: function (data, parentnode) {
+                var id = data.id.split("/")[1]
+                this.commonset(id, data, 'pagebox', parentnode);
+                console.log(data)
+                if (data.child.length > 0) {
+                    loopNode(data, id);
+                }
+
+
+            },
+            //组件公共设置
+            commonset: function (id, data, clas, parentnode) {
+                var str = '<div class=' + clas + ' id=' + id + '></div>';
+                var style = '#' + id + showJson(data.style)
+                createStyleSheet(style)
+                $(parentnode).insertAdjacentHTML('beforeend', str);
+            }
+        }
+        function loopNode(node, parentnode) {
+            for (var i = 0; i < node.child.length; i++) {
+                switch (node.child[i].type) {
+                    case "truck/menue":
+                        componentsRender.getmenue(node.child[i], parentnode);
+                        break;
+                    case "truck/image":
+                        componentsRender.getimg(node.child[i], parentnode);
+                        break;
+                   case "truck/newList":
+                        componentsRender.getnewlist(node.child[i], parentnode);
+                        break;    
+                    case "truck/emptyContainer":
+                        componentsRender.getnode(node.child[i], parentnode);
+                        break;
+
+                }
+            }
+        }
+        loopNode(content, 'root')
+        function _loadjs(url, fn, fail) {
+            var scriptlist = document.getElementsByTagName("script");
+            for (var i = 0; i < scriptlist.length; i++) {
+                if (scriptlist[i].src == url) {
+                    return
+                }
+            }
+            var script = document.createElement('script')
+            script.src = url
+            // script.async = true
+            script.onload = fn
+            script.onerror = fail;
+            (document.body || document.head).appendChild(script)
+        }
+
+
+        //window.localStorage.setItem("aa",val)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+{
+  "layout": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "name": "组场景",
+                "component": "widgetScene",
+                "close": false,
+                "pop": false
+              }
+            ],
+            "type": "panel",
+            "flex": 1
+          }
+        ],
+        "type": "column",
+        "flex": 1
+      }
+    ],
+    "type": "row"
+  },
+  "dialogs": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "name": "组件列表",
+              "component": "widgetComponent",
+              "close": true,
+              "pop": true,
+              "style": {
+                "width": "360px",
+                "height": "434.5px",
+                "left": "100px",
+                "top": "97px"
+              }
+            },
+            {
+              "name": "合成组件",
+              "component": "widgetCombinedComponents",
+              "close": true,
+              "pop": true,
+              "style": {
+                "width": "360px",
+                "height": "434.5px",
+                "left": "215px",
+                "top": "135px"
+              }
+            },
+            {
+              "name": "页面模板",
+              "component": "widgetPageTemplate"
+            }
+          ],
+          "type": "panel",
+          "flex": 1
+        }
+      ],
+      "type": "column",
+      "flex": "1",
+      "style": {
+        "width": "360px",
+        "height": "878px",
+        "left": "-360px",
+        "top": "75px"
+      }
+    },
+    {
+      "name": "属性",
+      "component": "widgetAttribute",
+      "close": false,
+      "pop": true,
+      "style": {
+        "width": "360px",
+        "height": "685.515625px",
+        "left": "1920px",
+        "top": "75px"
+      }
+    },
+    {
+      "name": "样式",
+      "component": "widgetStyleEditor",
+      "close": false,
+      "pop": true,
+      "style": {
+        "width": "360px",
+        "height": "685.515625px",
+        "left": "1920px",
+        "top": "210px"
+      }
+    },
+    {
+      "name": "脚本",
+      "component": "widgetScriptEditor",
+      "style": {
+        "width": "364px",
+        "height": "406px",
+        "left": "1920px",
+        "top": "345px"
+      },
+      "close": true,
+      "pop": true
+    }, 
+    {
+      "name": "组件树",
+      "component": "widgetComponentTree",
+      "close": true,
+      "pop": true,
+      "style": {
+        "width": "355px",
+        "height": "741px",
+        "left": "-353px",
+        "top": "210px"
+      }
+    }
+  ],
+  "version": 1,
+  "name": "desktop"
+}
