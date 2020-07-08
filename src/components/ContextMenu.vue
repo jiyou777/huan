@@ -26,6 +26,7 @@
       <i class="iconfont icon-import"></i>
       导入节点
     </a>-->
+    <!--    另存为组合组件   另存为组合组件   另存为组合组件   另存为组合组件   另存为组合组件 -->
     <template v-if="node && !isRootNode">
       <a class="item" @click="itemClick('combinedNode')">
         <i class="iconfont icon-import"></i>
@@ -171,6 +172,7 @@ export default {
       if (typeof this[key] == "function") {
         this[key](this.node);
       }
+      console.log(this[key](this.node))
     },
     deleteNode: function(node) {
       if (!node) return;
@@ -230,6 +232,7 @@ export default {
       });
     },
     combinedNode() {
+      // 另存为组件事件
       // if (this.demoMode)
       //   return this.$alert("您处在 demo 模式下，不能保存数据哦");
       var el = this.node.$el;
@@ -244,6 +247,7 @@ export default {
           content: JSON.stringify(nodeInfo)
         }
       });
+      console.log(this.openDialog)
     },
     packNode() {
       typeof (this.node && this.node.doPack) === "function" &&

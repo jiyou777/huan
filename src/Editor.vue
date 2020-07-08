@@ -7,7 +7,16 @@
     </div>
     <context-menu></context-menu>
     <!-- 弹出框 -->
-    <iframe ref="previewframe" class='iframe' id="ifame" name="ifame" border="0" src="http://localhost:8565/html" v-if="publishhtml" v-show="false"></iframe>
+    <iframe
+      ref="previewframe"
+      class="iframe"
+      id="ifame"
+      name="ifame"
+      border="0"
+      src="http://localhost:8565/html"
+      v-if="publishhtml"
+      v-show="false"
+    ></iframe>
     <div id="publishroot" style="display:none"></div>
     <c-dialogs></c-dialogs>
     <div :data-clipboard-text="clipboardContent" style="width:0;height:0;" ref="clipboard"></div>
@@ -31,7 +40,7 @@ import CDialogs from "src/components/Dialogs";
 import common from "./assets/js/common";
 import emptyPage from "./assets/data/empty.json";
 import Server from "./extend/Server";
-import UploadImage from 'src/components/UploadImage'//上传
+import UploadImage from "src/components/UploadImage"; //上传
 import UiDock from "./components/dock/index";
 import Bughd from "./components/bughd";
 import { getBaseNode } from "src/extend/Util";
@@ -40,13 +49,22 @@ import Tips from "./components/Tips";
 import myheader from "./components/Header";
 import { mapState } from "vuex";
 import axios from "axios";
+
 require("src/extend/filter");
 let config = require("./config/index.js");
 
 export default {
   mixins: [BaseComponent],
   name: "editor",
-  components: { CDialogs, ContextMenu, UiDock, Tips, myheader, Bughd,UploadImage },
+  components: {
+    CDialogs,
+    ContextMenu,
+    UiDock,
+    Tips,
+    myheader,
+    Bughd,
+    UploadImage
+  },
   data: function() {
     return {
       screenshotKey: null,
@@ -55,7 +73,9 @@ export default {
       pageInfo: null,
       keys: [],
       clipboardContent: "",
-      publishhtml:false,
+      publishhtml: false,
+      timer:null,
+      iframe:'',
       imgSrc: "",
       form: {
         name: "",
@@ -89,6 +109,9 @@ export default {
   beforeCreate: function() {},
   created: function() {},
   mounted: function() {
+    //                 axios.post('/api/getTopics?page=1&pageSize=10').then(res=>{
+    //                 console.log(res)
+    //             })
     window.Editor = this;
     this.bindEvent();
     this.loadPageInfo();
@@ -247,13 +270,13 @@ export default {
               lock: true,
               text: "稍等片刻"
             });
-          setTimeout(() => {
-            this.$refs['screenshot'].upload(el, options, function () {
-              loading && loading.close()
-              callback.apply(null, arguments)
-              this.screenshotKey = null
-            })
-          }, 100) // 不加延时加载,loading效果不能立即触发
+          // setTimeout(() => {
+          //   this.$refs['screenshot'].upload(el, options, function () {
+          //     loading && loading.close()
+          //     callback.apply(null, arguments)
+          //     this.screenshotKey = null
+          //   })
+          // }, 100) // 不加延时加载,loading效果不能立即触发
         }
       );
       // 按键
@@ -358,7 +381,8 @@ export default {
       } else {
         this.timer = window.setTimeout(() => {
           window.localStorage.setItem(me.STORAGE_KEY, JSON.stringify(content));
-          console.log("newChage", content);
+          window.clearInterval(this.timer)
+           me.publishhtml = false;
           // 被回退或者前进操作的时候不添加历史记录
           if (!me.lock) {
             HistoryCache.add(content); // 历史记录本身来处理数据的序列化和反序列化
@@ -367,32 +391,65 @@ export default {
         }, 500);
       }
     },
+    getinfame(){
+      let self = this;
+      this.timer = setInterval(function(){
+        self.iframe = window.frames["ifame"].document;
+        console.log(self.iframe)
+      },1000)
+    },
     saveToServer: function() {
       this.ema.fire("pageInfo.save");
     },
     savePage(fast, callback) {
-      if (this.demoMode) return this.$alert("您处在demo模式下，不能保存数据哦");
       var info = Object.assign({}, this.pageInfo);
       info.content = window.localStorage.getItem(this.STORAGE_KEY);
       this.savePagePreviewImage();
-      console.log(info);
-      // Server({
-      //   url: 'editor/pages/save',
-      //   method: 'post', // default
-      //   needLoading: true,
-      //   data: info
-      // }).then(({data}) => {
-      //   let code = data.code
-      //   let msg = data.msg
-      //   if (code == 500) return this.$alert(msg)
-      //   this.$message({type: 'success', message: '保存成功'})
-      //   callback && callback()
-      //   if (!fast) {
-      //     this.savePagePreviewImage()
-      //   }
-      // }).catch((respond) => {
-      //   this.$message({type: 'success', message: '保存失败'})
-      // })
+      let self = this;
+      self.publishhtml = true;
+      self.getinfame()
+      setTimeout(function() {
+        let iframenode =  self.iframe;
+        let headhtml = iframenode.getElementsByTagName("head")[0].outerHTML.replace("http://localhost:8565/html/","");
+        let roothtml = '<body>'+iframenode.getElementById("root").outerHTML;
+        let scriptel = iframenode.getElementsByTagName("script")
+        let scripthtml = [];
+        let focuslist = [];
+        for(let i=0;i<scriptel.length;i++){
+           if(i!=1){
+             scripthtml.push(scriptel[i].outerHTML.replace("http://localhost:8565/html/",""))
+           }
+        }
+         let pagecode ='<!DOCTYPE html><html lang="en">'
+                   +headhtml+roothtml+scripthtml.join(" ")+'</body></html>'
+        for(var i=0;i< self.$store.state.focusline.length;i++ ){
+          focuslist.push(JSON.stringify(self.$store.state.focusline[i]))
+
+        }
+        if (pagecode != "") {
+          window.clearInterval(self.timer)
+          let data = {
+            code: "page_437507747190280192",
+            name: "首页",
+            data: info.content,
+            pagecode:pagecode,
+            focus:focuslist.join(",")
+          };
+          Server({
+            url: `${self.Config.API_PATH}savePageInfo`,
+            method: "POST", // default
+            needLoading: true,
+            data: data
+          }).then(({ data }) => {
+              self.$message({ type: "success", message: "保存成功" });
+            })
+            .catch(respond => {
+              self.$message({ type: "success", message: "保存失败" });
+            });
+        }else{
+           self.$message({ type: "success", message: "网络不好，再试试哦!" });
+        }
+      }, 1000);      
     },
     savePagePreviewImage() {
       var urlInfo = common.parseURL(window.location.href);
@@ -404,7 +461,6 @@ export default {
           var info = Object.assign({}, this.pageInfo);
           info.content = window.localStorage.getItem(this.STORAGE_KEY);
           info.image = src;
-          console.log(src);
           // Server({
           //   url: 'editor/pages/save',
           //   method: 'post', // default
@@ -423,31 +479,30 @@ export default {
       let yes = await this.$confirm(
         "您确定要发布吗？发布以后用户即可查看最新的页面"
       );
-      setTimeout(function(){
-       console.log(window.frames["ifame"].document.getElementById("html"))
-    },1000)
-      if (!yes) return
-     var aa =  document.getElementById("stage");
-    this.publishhtml = true;
-    
-  
-    //  document.getElementById("ifame").src = "http://localhost:8565/html"
-      
-    //  let param = {
-    //   accept: 'text/html, text/plain'
-    //  }
-    //  axios.get('http://localhost:8565/html').then(function(response){
-    //    document.getElementById("publishroot").innerHTML = response.data;
-    //    console.log(document.getElementById("publishroot").innerHTML)
-    //        return;
-    //    })
-    //  this.ClearHtml(aa)
-    // window.open('http://localhost:8565/html','content','display:none,width=480,height=330,top=150,left=280, toolbar=no, menubar=no, scrollbars=auto, resizable=no, location=no, status=no'); 
+      setTimeout(function() {
+        console.log(window.frames["ifame"].document.getElementById("html"));
+      }, 200);
+      if (!yes) return;
+      var aa = document.getElementById("stage");
+      this.publishhtml = true;
+
+      //  document.getElementById("ifame").src = "http://localhost:8565/html"
+
+      //  let param = {
+      //   accept: 'text/html, text/plain'
+      //  }
+      //  axios.get('http://localhost:8565/html').then(function(response){
+      //    document.getElementById("publishroot").innerHTML = response.data;
+      //    console.log(document.getElementById("publishroot").innerHTML)
+      //        return;
+      //    })
+      //  this.ClearHtml(aa)
+      // window.open('http://localhost:8565/html','content','display:none,width=480,height=330,top=150,left=280, toolbar=no, menubar=no, scrollbars=auto, resizable=no, location=no, status=no');
       //  var $previewframe = this.$refs['previewframe'].contentWindow
       //   console.log($previewframe.document.getElementById("root"))
-        // setTimeout(() => {
-        //   $previewframe.postMessage({type: 'preview', content: content, canvas: this.$store.state.setting.tvSize}, '*')
-        // }, 1000)
+      // setTimeout(() => {
+      //   $previewframe.postMessage({type: 'preview', content: content, canvas: this.$store.state.setting.tvSize}, '*')
+      // }, 1000)
       // if (!yes) return
       // Server({
       //   url: 'editor/pages/publish',

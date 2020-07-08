@@ -127,6 +127,9 @@
           //     visibilitylevel: Number(that.form.isPublic)
           //   }
           // })
+          console.log(that)
+          console.log(that.content)
+          console.log(that.form)
           this.Visible = false
           this.$message({
             message: '组合组件保存成功',

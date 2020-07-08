@@ -1,5 +1,6 @@
 <template>
   <div class="pageTemplate widget">
+    <!-- 页面模板getTemplate -->
     <div class="box-search">
       <el-input
         class="searchInput"
@@ -19,17 +20,19 @@
       <assets-tags @selectchange="onTagSelect" :assets-id="categoryId"></assets-tags>
     </div>
     <div class="components">
+      <!-- 组件显示列表 -->
       <el-card shadow="hover" class="itemWarp" v-for="(item,index) in list" :key="index">
         <div class="n1">
           <div class="img">
             <img
-              v-if="item.image"
-              :src="item.image+'?x-oss-process=image/resize,w_120/crop,w_120,h_170'"
+              v-if="item.pic"
+              :src="item.pic+'?x-oss-process=image/resize,w_120/crop,w_120,h_170'"
             />
             <img v-else src="../../assets/images/logo.png" />
           </div>
           <h3 class="label">{{item.name}}</h3>
         </div>
+
         <div class="n2">
           <img
             v-if="item.image"
@@ -41,6 +44,8 @@
           <el-button class="btn" type="primary" round size="mini" @click="selectOne(item)">使用</el-button>
         </div>
       </el-card>
+
+
     </div>
   </div>
 </template>
@@ -198,8 +203,12 @@ import BaseComponent from "src/extend/BaseComponent";
 import { mapState } from "vuex";
 // import Server from "../../extend/Server";
 import AssetsTags from "../AssetsTags";
+// 默认模拟数据
 import datalist from "../../assets/layout/mould.json";
-
+// axios 获取模板列表
+    import axios from "axios"
+   import { Request } from "src/until/request"
+  import { getTemplateInfo } from "src/request/http"
 export default {
   mixins: [BaseComponent],
   name: "pageTemplate",
@@ -209,23 +218,33 @@ export default {
       categoryId: 1,
       searchKey: "",
       selectedTags: [],
-      list: []
+      list: [],
+      code:""
     };
   },
   computed: mapState({}),
   mounted: function() {
     this.loadData();
+
   },
   methods: {
     loadData: function() {
-      var tags = this.selectedTags.map(v => {
-        return {
-          id: v.id,
-          name: v.name
-        };
-      });
+          let obj ={
+      code:"template_440315003241893888"
+    }
+    getTemplateInfo(obj).then(res=>{
+      console.log(res.data)
+      this.list=res.data
+      console.log(this.list)
+    })
+    //   var tags = this.selectedTags.map(v => {
+    //     return {
+    //       id: v.id,
+    //       name: v.name
+    //     };
+    //   });
      
-     this.list = datalist.data.data;
+    //  this.list = datalist.data.data;
       // Server({
       //   url: 'editor/pages/publiclist',
       //   method: 'post', // default
@@ -240,6 +259,17 @@ export default {
       // })
     },
     changePage: function(item) {
+      console.log(item.code)
+
+          let obj ={
+      code:""
+    }
+    obj.code = code
+    getTemplateInfo(obj).then(res=>{
+      console.log(res.data)
+      // this.list=res.data
+      console.log(this.list)
+    })
       // Server({
       //   url: 'editor/pages/info',
       //   method: 'post', // default

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 let Config = require('../config/index')
 //var demoMode = false;
 // var demoMode =   process.env.NODE_ENV !== 'production' && !location.search.includes('key=') && /^https?:\/\/godspen.ymm56.com/.test(Config.API_PATH)
@@ -15,14 +16,14 @@ instance.interceptors.request.use(function (config) {
   if (config.needLoading) {
     window.EMA.fire('loading.show')
   }
-  config.data = config.data || {}
-  console.log( config.data)
+  config.data =  qs.stringify(config.data)|| {}
   if (config.trimNull && !(config.data instanceof window.FormData)) {
-    let _data = Object.assign({}, config.data)
+
+    let _data =config.data
     isNull(_data)
-    config.data = _data
+    config.data = qs.stringify(_data)
   }
-  return config
+  return  config
 
   function isNull (obj) {
     for (let [key, value] of Object.entries(obj)) {

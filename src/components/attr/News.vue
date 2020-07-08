@@ -47,6 +47,9 @@
 <script type="text/ecmascript-6">
     import BaseComponent from "src/extend/BaseComponent";
     import axios from "axios"
+   import { Request } from "src/until/request"
+
+  import { getTopics } from "src/request/http"
     export default {
         mixins: [BaseComponent],
         name: "News",
@@ -79,8 +82,15 @@
         computed: {},
         mounted: function() {
             console.log(this.inContent);
-            axios.post('/api/getTopics?page=1&pageSize=10').then(res=>{
-                console.log(res+"111111111111")
+            let obj = {
+                page:1,
+                pageSize:10
+            }
+            // axios.post('/api/getTopics',{obj}).then(res=>{
+            //     console.log(res+"111111111111")
+            // })
+            getTopics(obj).then(res=>{
+                console.log(res+"222222222")
             })
         },
         methods: {

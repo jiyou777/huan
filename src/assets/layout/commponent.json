@@ -73,6 +73,29 @@
                 }
             },
             {
+                "id": 111,
+                "name": "truck/swiperlist",
+                "version": "1.0.0",
+                "path": "http://localhost:8565/js/swiperlistindex.js",
+                "desc": "轮播组件",
+                "userId": 2,
+                "useNumber": 2021,
+                "status": 1,
+                "isnew": 1,
+                "type": 0,
+                "visibilitylevel": 1,
+                "updateTime": "2020-05-20T08:28:02.000Z",
+                "createTime": "2019-05-24T06:11:51.000Z",
+                "ComponentUse": {
+                    "id": 8,
+                    "cid": 21,
+                    "useNumber": 7408,
+                    "love": 0,
+                    "updateTime": "2020-05-20T08:28:02.000Z",
+                    "createTime": "2019-05-08T05:56:12.000Z"
+                }
+            },
+            {
                 "id": 19,
                 "name": "truck/image",
                 "version": "0.1.7",
