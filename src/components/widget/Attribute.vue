@@ -202,6 +202,13 @@
                       v-else-if="item.type=='newlist'"
                       :content.sync="selectNode.props[item.key]"
                     ></attr-newlist>
+                    <!-- 轮播组件 -->
+                     <attr-myswiper
+                      v-else-if="item.type=='sliders'"
+                      :content.sync="selectNode.props[item.key]"
+                    ></attr-myswiper>
+                    <!-- content是传了数据过去吧进去组件在获取 -->
+                    <!-- 轮播组件 -->
                     <!-- 是否显示文字 -->
                        <el-switch    v-else-if="item.type=='isshow'" key="1" size="mini"   v-model="selectNode.props[item.key]"   ></el-switch>
                     <!-- 切换图片/文字列表 -->
@@ -359,7 +366,7 @@ import Vue from "vue";
 import cLoader from "src/extend/componentLoader";
 import AttrMenue from "../attr/Menue"; //菜单
 import AttrNewlist from "../attr/News"; //列表
-
+import AttrMyswiper from "../attr/myswiper"; //轮播
 const VERSION_CACHE = {};
 
 export default {
@@ -372,7 +379,8 @@ export default {
     YColorPicker,
     AttrEvent,
     AttrMenue,
-    AttrNewlist
+    AttrNewlist,
+    AttrMyswiper
   },
   data: function() {
     return {
