@@ -72,6 +72,7 @@
                     "createTime": "2019-05-08T05:56:12.000Z"
                 }
             },
+            
             {
                 "id": 111,
                 "name": "truck/swiperlist",
@@ -95,6 +96,7 @@
                     "createTime": "2019-05-08T05:56:12.000Z"
                 }
             },
+            
             {
                 "id": 19,
                 "name": "truck/image",

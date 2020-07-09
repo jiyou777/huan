@@ -65,6 +65,9 @@
             content: {
                 type: Array,
             },
+                       content2: {
+                type: Object,
+            },
 
         },
         watch: {
@@ -82,7 +85,7 @@
 
         computed: {},
         mounted: function() {
-            console.log(this.content)
+            console.log(this.content2)
             console.log(this.inContent);
             let obj = {
                 page:1,

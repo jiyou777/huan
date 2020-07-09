@@ -1,26 +1,30 @@
 [
     {
-        "showimg": false,
-        "label": "菜单5",
-        "icourl": "",
-        "imgurl": ""
+        "showimg": false, 
+        "label": "轮播标题1", 
+        "icourl": "", 
+        "imgurl": "https://imgs.qunarzz.com/sight/p0/1806/d0/d033ab35c038b7c4a3.img.jpg_256x160_b4b0587c.jpg", 
+        "imgid": 0
+    }, 
+    {
+        "showimg": false, 
+        "label": "轮播标题2", 
+        "icourl": "", 
+        "imgurl": "https://imgs.qunarzz.com/p/p48/201302/28/bc44faa497db0dcf93835fbb.jpg_256x160_0ba13461.jpg", 
+        "imgid": 1
+    }, 
+    {
+        "showimg": false, 
+        "label": "轮播标题3", 
+        "icourl": "", 
+        "imgurl": "https://imgs.qunarzz.com/p/p29/201302/28/3d20251a1b60350a93835fbb.jpg_256x160_e8f468b0.jpg", 
+        "imgid": 2
     },
     {
-        "showimg": false,
-        "label": "菜单6",
-        "icourl": "",
-        "imgurl": ""
-    },
-    {
-        "showimg": false,
-        "label": "菜单7",
-        "icourl": "",
-        "imgurl": ""
-    },
-    {
-        "showimg": false,
-        "label": "菜单8",
-        "icourl": "",
-        "imgurl": ""
+        "showimg": false, 
+        "label": "轮播标题3", 
+        "icourl": "", 
+        "imgurl": "https://imgs.qunarzz.com/p/p66/201304/17/384810d022dd28f793835fbb.jpg_256x160_6a7ec251.jpg", 
+        "imgid": 2
     }
 ]

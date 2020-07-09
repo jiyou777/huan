@@ -60,12 +60,40 @@
                 }
                 $(id).innerHTML = str1
             },
+            // 获取列表组件
             getnewlist: function (data, parentnode) {
                 var id = data.id.split("/")[1];
                 var str1 = "";
                 console.log("newlist")
                 this.commonset(id, data, 'newlist', parentnode);
                 _loadjs('http://localhost:8565/html/js/newList.js', function () {
+                        // console.log(parm)
+                    })
+                // if (!isEmpty(data.props.interfacechoose)) {
+                //     // console.log(document.getElementsByTagName("script"))
+                   
+                //     // Ajax('get', base + data.props.interfacechoose + '.json', true, {}, function (success) {
+                //     //     var res = JSON.parse(success);
+                //     //     for (var i = 0; i < res.length; i++) {
+                //     //         str1 += '<div  class="item">' + res[i].label + '</div>';
+                //     //     }
+                //     //     $(id).innerHTML = str1
+                //     // }, function (faild) {
+                //     // })
+                // }
+                // else {
+                //     str1 = '<div  class="item">菜单1</div><div class="item">菜单2</div><div  class="item">菜单3</div><div  class="item">菜单4</div>'
+                //     $(id).innerHTML = str1
+                // }
+            },
+            // 获取轮播组件
+            getswiperlist: function (data, parentnode) {
+                var id = data.id.split("/")[1];
+                var str1 = "";
+                console.log("swiperlist")
+                this.commonset(id, data, 'swiperlist', parentnode);
+                // 调用哪个就写哪个生成js组件的名称
+                _loadjs('http://localhost:8565/html/js/swiperlist.js', function () {
                         // console.log(parm)
                     })
                 // if (!isEmpty(data.props.interfacechoose)) {
@@ -112,8 +140,13 @@
                     case "truck/image":
                         componentsRender.getimg(node.child[i], parentnode);
                         break;
+                        // 列表
                    case "truck/newList":
                         componentsRender.getnewlist(node.child[i], parentnode);
+                        break; 
+                        // 轮播
+                   case "truck/swiperlist":
+                        componentsRender.getswiperlist(node.child[i], parentnode);
                         break;    
                     case "truck/emptyContainer":
                         componentsRender.getnode(node.child[i], parentnode);

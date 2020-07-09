@@ -206,15 +206,22 @@
                      <attr-myswiper
                       v-else-if="item.type=='sliders'"
                       :content.sync="selectNode.props[item.key]"
+                       :content2.sync="selectNode.props"
                     ></attr-myswiper>
                     <!-- content是传了数据过去吧进去组件在获取 -->
                     <!-- 轮播组件 -->
                     <!-- 是否显示文字 -->
-                       <el-switch    v-else-if="item.type=='isshow'" key="1" size="mini"   v-model="selectNode.props[item.key]"   ></el-switch>
+                       <el-switch    v-else-if="item.type=='isshow'" key="1" size="mini"  active-text="显示" inactive-text="隐藏"   v-model="selectNode.props[item.key]"   ></el-switch>
                     <!-- 切换图片/文字列表 -->
-                       <el-switch    v-else-if="item.type=='isshowpic'" key="1" size="mini"   v-model="selectNode.props[item.key]"   ></el-switch>
-                       <!-- 颜色选择器 -->
-                    
+                       <el-switch    v-else-if="item.type=='isshowpic'" key="1" size="mini"  active-text="显示" inactive-text="隐藏"   v-model="selectNode.props[item.key]"   ></el-switch>
+                      
+                       <!-- 是否显示箭头 -->
+     
+                  <el-switch  v-else-if="item.type=='isbutton'" key="1" size="mini"   v-model="selectNode.props[item.key]"  active-text="显示" inactive-text="隐藏"> </el-switch>
+                    <!-- 是否显示指示器 -->
+                    <el-switch    v-else-if="item.type=='ispagin'" key="1" size="mini"    v-model="selectNode.props[item.key]"   active-text="显示" inactive-text="隐藏"  ></el-switch>
+                    <!-- 轮播效果 -->
+                     <el-switch    v-else-if="item.type=='iscards'" key="1" size="mini"   v-model="selectNode.props[item.key]"   active-text="无动画" inactive-text="有动画" ></el-switch>
                     <!-- 时间选择器 -->
                     <el-date-picker
                       v-else-if="item.type=='date'"
@@ -460,6 +467,7 @@ export default {
             },
     //选择数据源接口渲染
     renderData: function(data, label) {
+      console.log(data,label)
       if (label == "数据源") {
         fetch(data + ".json", {
           method: "get",
@@ -471,7 +479,14 @@ export default {
         })
           .then(v => v.json())
           .then(res => {
-            this.selectNode.props.list = res;
+            // 菜单数据源
+            if(  this.selectNode.props.list){
+              this.selectNode.props.list = res;
+            }
+            // 轮播图数据源
+        if(  this.selectNode.props.sliders){
+              this.selectNode.props.sliders = res;
+            }
           });
       }else if(label == "显示方式"){
         let w= this.selectNode.style.width;

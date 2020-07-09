@@ -86,21 +86,21 @@ function(e) {
         function n(e, t, i, n) {
             v = i,
             g = n || {};
-            var s = Object(u.a)(e, t);
+            var s = Object(l.a)(e, t);
             return r(s),
             function(t) {
                 for (var i = [], n = 0; n < s.length; n++) {
                     var o = s[n],
-                    a = l[o.id];
+                    a = c[o.id];
                     a.refs--,
                     i.push(a)
                 }
-                t ? (s = Object(u.a)(e, t), r(s)) : s = [];
+                t ? (s = Object(l.a)(e, t), r(s)) : s = [];
                 for (var n = 0; n < i.length; n++) {
                     var a = i[n];
                     if (0 === a.refs) {
                         for (var d = 0; d < a.parts.length; d++) a.parts[d]();
-                        delete l[a.id]
+                        delete c[a.id]
                     }
                 }
             }
@@ -108,7 +108,7 @@ function(e) {
         function r(e) {
             for (var t = 0; t < e.length; t++) {
                 var i = e[t],
-                n = l[i.id];
+                n = c[i.id];
                 if (n) {
                     n.refs++;
                     for (var r = 0; r < n.parts.length; r++) n.parts[r](i.parts[r]);
@@ -116,7 +116,7 @@ function(e) {
                     n.parts.length > i.parts.length && (n.parts.length = i.parts.length)
                 } else {
                     for (var s = [], r = 0; r < i.parts.length; r++) s.push(o(i.parts[r]));
-                    l[i.id] = {
+                    c[i.id] = {
                         id: i.id,
                         refs: 1,
                         parts: s
@@ -179,11 +179,11 @@ function(e) {
         }),
         t.
     default = n;
-        var u = i(2),
-        c = "undefined" != typeof document;
-        if ("undefined" != typeof DEBUG && DEBUG && !c) throw new Error("vue-style-loader cannot be used in a non-browser environment. Use { target: 'node' } in your Webpack config to indicate a server-rendering environment.");
-        var l = {},
-        f = c && (document.head || document.getElementsByTagName("head")[0]),
+        var l = i(2),
+        u = "undefined" != typeof document;
+        if ("undefined" != typeof DEBUG && DEBUG && !u) throw new Error("vue-style-loader cannot be used in a non-browser environment. Use { target: 'node' } in your Webpack config to indicate a server-rendering environment.");
+        var c = {},
+        f = u && (document.head || document.getElementsByTagName("head")[0]),
         p = null,
         h = 0,
         v = !1,
@@ -208,16 +208,16 @@ function(e) {
                 o = s[0],
                 a = s[1],
                 d = s[2],
-                u = s[3],
-                c = {
+                l = s[3],
+                u = {
                     id: e + ":" + r,
                     css: a,
                     media: d,
-                    sourceMap: u
+                    sourceMap: l
                 };
-                n[o] ? n[o].parts.push(c) : i.push(n[o] = {
+                n[o] ? n[o].parts.push(u) : i.push(n[o] = {
                     id: o,
-                    parts: [c]
+                    parts: [u]
                 })
             }
             return i
@@ -232,34 +232,34 @@ function(e) {
         default;
             "object" !== d && "function" !== d || (e = e.
         default);
-            var u = "function" == typeof e ? e.options: e;
-            t && (u.render = t, u.staticRenderFns = i, u._compiled = !0),
-            n && (u.functional = !0),
-            s && (u._scopeId = s);
-            var c;
-            if (o ? (c = function(e) {
+            var l = "function" == typeof e ? e.options: e;
+            t && (l.render = t, l.staticRenderFns = i, l._compiled = !0),
+            n && (l.functional = !0),
+            s && (l._scopeId = s);
+            var u;
+            if (o ? (u = function(e) {
                 e = e || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext,
                 e || "undefined" == typeof __VUE_SSR_CONTEXT__ || (e = __VUE_SSR_CONTEXT__),
                 r && r.call(this, e),
                 e && e._registeredComponents && e._registeredComponents.add(o)
             },
-            u._ssrRegister = c) : r && (c = a ?
+            l._ssrRegister = u) : r && (u = a ?
             function() {
                 r.call(this, this.$root.$options.shadowRoot)
-            }: r), c) if (u.functional) {
-                u._injectStyles = c;
-                var l = u.render;
-                u.render = function(e, t) {
-                    return c.call(t),
-                    l(e, t)
+            }: r), u) if (l.functional) {
+                l._injectStyles = u;
+                var c = l.render;
+                l.render = function(e, t) {
+                    return u.call(t),
+                    c(e, t)
                 }
             } else {
-                var f = u.beforeCreate;
-                u.beforeCreate = f ? [].concat(f, c) : [c]
+                var f = l.beforeCreate;
+                l.beforeCreate = f ? [].concat(f, u) : [u]
             }
             return {
                 exports: e,
-                options: u
+                options: l
             }
         }
         t.a = n
@@ -275,10 +275,10 @@ function(e) {
     default = {
             mixins: [n.VueExtend.mixin],
             name: "maliangeditor",
-            label: "test",
+            label: "轮播组件",
             style: {
-                width: "600px",
-                height: "270px"
+                width: "500px",
+                height: "250px"
             },
             stack: !1,
             childLimit: 9999,
@@ -287,7 +287,8 @@ function(e) {
                 return {
                     currentIndex: 1,
                     distance: -this.imgWidth,
-                    transitionEnd: !0
+                    transitionEnd: !0,
+                    swiperlength: 3
                 }
             },
             props: {
@@ -311,10 +312,19 @@ function(e) {
                         defaultList: ["终端1", "终端2"]
                     }
                 },
+                interfacechoose: {
+                default:
+                    "",
+                    editer: {
+                        label: "数据源",
+                        type: "enum",
+                        defaultList: ["默认", "/getSwiper", "/getinfo"]
+                    }
+                },
                 ispagin: {
                     type: Boolean,
                 default:
-                    !0,
+                    !1,
                     editer: {
                         label: "是否隐藏指示器",
                         type: "ispagin"
@@ -323,7 +333,7 @@ function(e) {
                 isbutton: {
                     type: Boolean,
                 default:
-                    !0,
+                    !1,
                     editer: {
                         label: "是否显示切换箭头",
                         type: "isbutton"
@@ -332,7 +342,7 @@ function(e) {
                 iscards: {
                     type: Boolean,
                 default:
-                    !0,
+                    !1,
                     editer: {
                         label: "轮播效果",
                         type: "iscards"
@@ -495,6 +505,9 @@ function(e) {
                 }
             },
             watch: {
+                swiperlength: function(e) {
+                    this.picnum = e
+                },
                 picnum: function(e) {
                     console.log(e),
                     this.sliders.splice(0, this.sliders.length);
@@ -505,13 +518,24 @@ function(e) {
                             icourl: "",
                             imgurl: "https://i1.mifile.cn/a4/xmad_15517939170939_oiXCK.jpg",
                             imgid: t
+                        },
+                        n = {
+                            showimg: !1,
+                            label: "轮播图",
+                            icourl: "",
+                            imgurl: "https://i1.mifile.cn/a4/xmad_15532384207972_iJXSx.jpg",
+                            imgid: t
                         };
-                        this.sliders.push(i)
+                        t % 2 == 0 && this.sliders.push(i),
+                        t % 2 == 1 && this.sliders.push(n)
                     }
-                    var n = JSON.parse(JSON.stringify(this.sliders));
-                    n[0].label = "gaibian",
-                    this.sliders = n,
+                    var r = JSON.parse(JSON.stringify(this.sliders));
+                    r[0].label = "gaibian",
+                    this.sliders = r,
                     console.log(this.sliders)
+                },
+                interval: function() {
+                    this.play()
                 },
                 sliders: {
                     handler: function(e, t) {
@@ -578,10 +602,10 @@ function(e) {
         } (o);
         var a = i(18),
         d = i(3),
-        u = n,
-        c = Object(d.a)(s.a, a.a, a.b, !1, u, "data-v-4c79895c", null);
+        l = n,
+        u = Object(d.a)(s.a, a.a, a.b, !1, l, "data-v-156acebb", null);
         t.
-    default = c.exports
+    default = u.exports
     },
     function(e, t, i) {
         var n = i(10);
@@ -589,11 +613,11 @@ function(e) {
         n.locals && (e.exports = n.locals);
         var r = i(1).
     default;
-        r("24a1d6c0", n, !0, {})
+        r("817a6ee2", n, !0, {})
     },
     function(e, t, i) {
         t = e.exports = i(0)(!1),
-        t.push([e.i, ".component[data-v-4c79895c]{width:100%;height:100%}[data-v-4c79895c]{box-sizing:border-box;margin:0;padding:0}ol[data-v-4c79895c],ul[data-v-4c79895c]{list-style:none}#slider[data-v-4c79895c]{width:100%;height:100%;text-align:center}.window[data-v-4c79895c]{position:relative;width:600px;height:400px;margin:0 auto;overflow:hidden}.container[data-v-4c79895c]{height:200px;position:absolute;top:0;left:0}.container-cards[data-v-4c79895c]{width:500px;height:250px;position:relative}.container-cards li[data-v-4c79895c]{width:500px;height:250px;top:0;left:0;position:absolute}.container li[data-v-4c79895c]{float:left}.left[data-v-4c79895c],.right[data-v-4c79895c]{position:absolute;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);width:50px;height:50px;z-index:100;background:#000;opacity:.5;border-radius:50%;cursor:pointer}.left[data-v-4c79895c]{left:3%;padding-left:12px;padding-top:10px}.right[data-v-4c79895c]{right:3%;padding-right:12px;padding-top:10px}img[data-v-4c79895c]{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.dots[data-v-4c79895c]{position:absolute;bottom:10px;left:50%;z-index:100}.dots li[data-v-4c79895c]{display:inline-block;width:15px;height:15px;margin:0 3px;border:1px solid #fff;border-radius:50%;background-color:#333;cursor:pointer}.dots .dotted[data-v-4c79895c]{background-color:orange}", ""])
+        t.push([e.i, ".component[data-v-156acebb]{width:100%;height:100%}[data-v-156acebb]{box-sizing:border-box;margin:0;padding:0}ol[data-v-156acebb],ul[data-v-156acebb]{list-style:none}#slider[data-v-156acebb]{width:100%;height:100%;text-align:center}.window[data-v-156acebb]{position:relative;width:600px;height:400px;margin:0 auto;overflow:hidden}.container[data-v-156acebb]{height:200px;position:absolute;top:0;left:0}.container-cards[data-v-156acebb]{width:500px;height:250px;position:relative}.container-cards li[data-v-156acebb]{width:500px;height:250px;top:0;left:0;position:absolute}.container li[data-v-156acebb]{float:left}.left[data-v-156acebb],.right[data-v-156acebb]{position:absolute;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);width:50px;height:50px;z-index:100;background:#000;opacity:.5;border-radius:50%;cursor:pointer}.left[data-v-156acebb]{left:3%;padding-left:12px;padding-top:10px}.right[data-v-156acebb]{right:3%;padding-right:12px;padding-top:10px}img[data-v-156acebb]{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.dots[data-v-156acebb]{position:absolute;bottom:10px;left:50%;z-index:100}.dots li[data-v-156acebb]{display:inline-block;width:15px;height:15px;margin:0 3px;border:1px solid #fff;border-radius:50%;background-color:#333;cursor:pointer}.dots .dotted[data-v-156acebb]{background-color:orange}", ""])
     },
     function(t, i) {
         t.exports = e
