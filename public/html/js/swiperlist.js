@@ -87,7 +87,6 @@ function getdefaultnew(id,data,data2){
    str4 += '<li  class="dotted" @click="jump+1"></li>'
 }
 
-
  var str5= '</ul>'+
   '</div>'+
   '</div>' 
